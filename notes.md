@@ -152,7 +152,7 @@ docker compose -f docker-compose.dev.yml up -d
 MONGO_URL=mongodb://***alk***:***210***5@localhost:3456/the_database npm run dev
 ```
 
-**δικές μου αλλαγές**
+### **δικές μου αλλαγές**
 εφτιαξα ένα .env με
 ```
 MONGO_USER=***
@@ -195,12 +195,21 @@ services:
       - .env
     volumes: 
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-      # - ./mongo_data:/data/db
+      - ./mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
 ```
 
 έτρεξε με 
 ```bash
 docker compose -f docker-compose.dev.yml down --volumes
+# επρεπε να τρέξουμε και αυτο γιατι το Init της mongo γινετε μονο την πρώτη φορα
+rm -rf mongo_data
 docker compose -f docker-compose.dev.yml up -d
+# πρέπει να τρεχω αυτό ωσπου να μου πει connected
+docker compose -f docker-compose.dev.yml ps
 MONGO_URL=mongodb://***alk***:***210***5@localhost:3456/the_database npm run dev
 ```
