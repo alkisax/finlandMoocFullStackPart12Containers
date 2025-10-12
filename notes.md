@@ -69,9 +69,15 @@ FROM node:20
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY --chown=node:node . .
 
-CMD DEBUG=first-image:* npm start
+RUN npm ci
+
+ENV DEBUG=first-image:*
+
+USER node
+
+CMD npm start
 ```
 - build
 `docker build -t express-server .`
@@ -93,4 +99,108 @@ Your browser → localhost:3123 → Docker → container’s port 3000 → Expre
 
 
 ## test with
-`docker build -t express-server . && docker run -p 3123:3000 express-server`
+`docker build -t todo-backend . && docker run -p 3000:3000 todo-backend`
+
+## docker-compose.yml
+```
+services:
+  app:                    # The name of the service, can be anything
+    image: express-server # Declares which image to use
+    build: .              # Declares where to build if image is not found
+    ports:                # Declares the ports to publish
+      - 3000:3000
+```
+
+- τώρα τρέχει με 
+```bash
+docker compose up
+```
+- μπορώ να τρέξω συγκεκριμένο αρχείο σε αυτό έχουμε εγκαταστήσει την mongo ως container
+```bash
+docker compose -f docker-compose.dev.yml up
+```
+
+κλείνει 
+```bash
+docker compose down
+```
+
+## Mongo
+τελικά έτρεξε ως εξής. άλλαξα το αρχειο και του έβαλα τα δικά μου
+```js
+db.createUser({
+  user: '***',
+  pwd: '***',
+  roles: [
+    {
+      role: 'dbOwner',
+      db: 'the_database',
+    },
+  ],
+});
+
+db.createCollection('todos');
+
+db.todos.insert({ text: 'Write code', done: true });
+db.todos.insert({ text: 'Learn about containers', done: false });
+```
+
+- Run MongoDB inside Docker, but keep running your Node app directly on your machine.
+```bash
+docker compose -f docker-compose.dev.yml down --volumes
+docker compose -f docker-compose.dev.yml up -d
+MONGO_URL=mongodb://***alk***:***210***5@localhost:3456/the_database npm run dev
+```
+
+**δικές μου αλλαγές**
+εφτιαξα ένα .env με
+```
+MONGO_USER=***
+MONGO_PASS=***
+```
+και 
+```js
+db.createUser({
+  user: process.env.MONGO_USER || 'the_username',
+  pwd: process.env.MONGO_PASS || 'the_password',
+  roles: [
+    {
+      role: 'dbOwner',
+      db: 'the_database',
+    },
+  ],
+});
+
+db.createCollection('todos');
+
+db.todos.insert({ text: 'Write code', done: true });
+db.todos.insert({ text: 'Learn about containers', done: false });
+```
+
+και part12-containers-applications\todo-app\todo-backend\docker-compose.dev.yml
+(προσθεσα τα επιπλέων env)
+```yml
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASS: ${MONGO_PASS}
+    env_file:
+      - .env
+    volumes: 
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      # - ./mongo_data:/data/db
+```
+
+έτρεξε με 
+```bash
+docker compose -f docker-compose.dev.yml down --volumes
+docker compose -f docker-compose.dev.yml up -d
+MONGO_URL=mongodb://***alk***:***210***5@localhost:3456/the_database npm run dev
+```
