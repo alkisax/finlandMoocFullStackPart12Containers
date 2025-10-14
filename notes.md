@@ -246,3 +246,44 @@ docker images
 docker build . -t todo-frontend
 docker run -p 8000:80 todo-frontend
 ```
+
+## moving whole app
+### front
+
+part12-containers-applications\todo-app\todo-frontend\dev.Dockerfile
+```
+FROM node:20
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+# Change npm ci to npm install since we are going to be in development mode
+RUN npm install
+
+# npm run dev is the command to start the application in development mode
+CMD ["npm", "run", "dev", "--", "--host"]
+```
+
+```bash
+docker build -f ./dev.Dockerfile -t todo-frontend-dev .
+docker run -p 5173:5173 todo-frontend-dev
+```
+
+part12-containers-applications\todo-app\todo-frontend\docker-compose.dev.yml
+```
+services:
+  app:
+    image: todo-frontend-dev
+    build:
+      context: . 
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app   
+    ports:
+      - 5173:5173
+    container_name: todo-frontend-dev
+```
+```bash
+docker compose -f docker-compose.dev.yml up
+```
