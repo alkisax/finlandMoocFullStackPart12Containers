@@ -213,3 +213,36 @@ docker compose -f docker-compose.dev.yml up -d
 docker compose -f docker-compose.dev.yml ps
 MONGO_URL=mongodb://***alk***:***210***5@localhost:3456/the_database npm run dev
 ```
+
+# 12.c
+## frontend
+```
+# The first FROM is now a stage called build-stage
+
+FROM node:20 AS build-stage 
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN npm ci
+
+ENV VITE_BACKEND_URL=http://localhost:3000
+
+RUN npm run build
+
+# This is a new stage, everything before this is gone, except for the files that we want to COPY
+
+FROM nginx:1.25-alpine
+
+# COPY the directory dist from the build-stage to /usr/share/nginx/html
+# The target location here was found from the Docker hub page
+
+COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
+```
+
+```bash
+docker images
+docker build . -t todo-frontend
+docker run -p 8000:80 todo-frontend
+```
