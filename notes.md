@@ -216,7 +216,7 @@ MONGO_URL=mongodb://***alk***:***210***5@localhost:3456/the_database npm run dev
 
 # 12.c
 ## frontend
-```
+```yml
 # The first FROM is now a stage called build-stage
 
 FROM node:20 AS build-stage 
@@ -251,7 +251,7 @@ docker run -p 8000:80 todo-frontend
 ### front
 
 part12-containers-applications\todo-app\todo-frontend\dev.Dockerfile
-```
+```yml
 FROM node:20
 
 WORKDIR /usr/src/app
@@ -271,7 +271,7 @@ docker run -p 5173:5173 todo-frontend-dev
 ```
 
 part12-containers-applications\todo-app\todo-frontend\docker-compose.dev.yml
-```
+```yml
 services:
   app:
     image: todo-frontend-dev
@@ -283,7 +283,14 @@ services:
     ports:
       - 5173:5173
     container_name: todo-frontend-dev
+  debug-helper:
+    image: busybox
 ```
 ```bash
 docker compose -f docker-compose.dev.yml up
+```
+
+## compose
+```bash
+docker compose -f docker-compose.dev.yml run --rm debug-helper wget -O - http://app:5173
 ```
