@@ -1,5 +1,0 @@
-Script started on 2025-10-12 12:39:24+03:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="78" LINES="16"]
-[?2004h]0;dministrator@WINDOWS-4ABEJ0B: /mnt/d/coding/FinlandMOOCFullStack/part12[01;32mdministrator@WINDOWS-4ABEJ0B[00m:[01;34m/mnt/d/coding/FinlandMOOCFullStack/part12[00m$ [K]0;dministrator@WINDOWS-4ABEJ0B: /mnt/d/coding/FinlandMOOCFullStack/part12[01;32mdministrator@WINDOWS-4ABEJ0B[00m:[01;34m/mnt/d/coding/FinlandMOOCFullStack/part12[00m$ exit
-[?2004lexit
-
-Script done on 2025-10-12 12:39:43+03:00 [COMMAND_EXIT_CODE="0"]

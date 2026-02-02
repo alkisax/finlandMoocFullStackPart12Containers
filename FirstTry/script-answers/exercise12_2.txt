@@ -1,19 +1,0 @@
-Script started on 2025-10-08 13:00:01+03:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="67" LINES="38"]
-[?2004h]0;dministrator@WINDOWS-4ABEJ0B: /mnt/d/coding/FinlandMOOCFullStack/part12/part12-containers-applications/script-answers[01;32mdministrator@WINDOWS-4ABEJ0B[00m:[01;34m/mnt/d/coding/FinlandMOOCFullStack/part12/part12-containers-applications/script-answers[00m$ [7mdocker container[27m[7m [27m[7mrun -it ubuntu bash[27m[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cdocker container run -it ubuntu bash
-[?2004l[?2004h]0;root@503373fa2dd1: /root@503373fa2dd1:/# mkdir usr
-[?2004lmkdir: cannot create directory 'usr': File exists
-[?2004h]0;root@503373fa2dd1: /root@503373fa2dd1:/# cd usr
-[?2004l[?2004h]0;root@503373fa2dd1: /usrroot@503373fa2dd1:/usr# cd src
-[?2004l[?2004h]0;root@503373fa2dd1: /usr/srcroot@503373fa2dd1:/usr/src# cd app
-[?2004lbash: cd: app: No such file or directory
-[?2004h]0;root@503373fa2dd1: /usr/srcroot@503373fa2dd1:/usr/src# mkdir app
-[?2004l[?2004h]0;root@503373fa2dd1: /usr/srcroot@503373fa2dd1:/usr/src# cd a[[Kpp
-[?2004l[?2004h]0;root@503373fa2dd1: /usr/src/approot@503373fa2dd1:/usr/src/app# touch index.js
-[?2004l[?2004h]0;root@503373fa2dd1: /usr/src/approot@503373fa2dd1:/usr/src/app# ls
-[?2004lindex.js
-[?2004h]0;root@503373fa2dd1: /usr/src/approot@503373fa2dd1:/usr/src/app# exit
-[?2004lexit
-[?2004h]0;dministrator@WINDOWS-4ABEJ0B: /mnt/d/coding/FinlandMOOCFullStack/part12/part12-containers-applications/script-answers[01;32mdministrator@WINDOWS-4ABEJ0B[00m:[01;34m/mnt/d/coding/FinlandMOOCFullStack/part12/part12-containers-applications/script-answers[00m$ exit
-[?2004lexit
-
-Script done on 2025-10-08 13:02:00+03:00 [COMMAND_EXIT_CODE="0"]
